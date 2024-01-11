@@ -18,6 +18,6 @@
 	</NavUl>
 </Navbar>
 
-<div class="w-10/12 mx-auto mt-3">
+<div class="w-9/12 mx-auto mt-3">
 	<slot />
 </div>

@@ -21,7 +21,7 @@
 	</div>
 </div>
 
-<div class="mt-5 flex justify-center space-x-4 space-y-2 flex-wrap">
+<div class="mt-5 flex flex-wrap">
 	<MoveListItem />
 	<MoveListItem />
 	<MoveListItem />
