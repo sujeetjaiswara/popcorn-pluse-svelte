@@ -21,15 +21,20 @@
 	</div>
 </div>
 
-<!-- {value} -->
-
-<div class="flex items-center justify-between space-x-2 mt-3">
-	<div class="border border-red-600 w-6/12 h-svh">
-		<MoveListItem></MoveListItem>
-		<MoveListItem></MoveListItem>
-		<MoveListItem></MoveListItem>
-		<MoveListItem></MoveListItem>
-	</div>
-
-	<div class="border border-red-600 w-full h-svh p-5">Preview</div>
+<div class="mt-5 flex justify-center space-x-4 space-y-2 flex-wrap">
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
+	<MoveListItem />
 </div>
