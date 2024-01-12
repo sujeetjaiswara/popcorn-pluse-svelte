@@ -3,6 +3,9 @@
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
 	import { GithubSolid } from 'flowbite-svelte-icons';
 	import { DarkMode } from 'flowbite-svelte';
+	import { fly } from 'svelte/transition';
+
+	export let data;
 </script>
 
 <Navbar class="py-[10px] border-b" color="default">
@@ -25,6 +28,12 @@
 </Navbar>
 
 <!-- Page container -->
-<div class="w-9/12 mx-auto mt-3">
-	<slot />
-</div>
+{#key data.url}
+	<div
+		class="w-9/12 mx-auto mt-3"
+		in:fly={{ x: -50, duration: 100, delay: 100 }}
+		out:fly={{ x: 50, duration: 100 }}
+	>
+		<slot />
+	</div>
+{/key}
