@@ -1,40 +1,77 @@
-<script>
-	import { Search, Select } from 'flowbite-svelte';
+<script lang="ts">
+	import { Button, CardPlaceholder, Search, Select, Spinner } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import MoveListItem from '../components/MoveListItem.svelte';
+	import { PUBLIC_API_KEY, PUBLIC_ENDPOINT } from '$env/static/public';
 
 	let value = '';
+	let selectedCategory = 'popular';
+	let page = 1;
+	let movies: any[] = [];
+	let isLoading = false;
 
-	let selected = '';
-	let countries = [
-		{ value: 'us', name: 'Now Playing' },
-		{ value: 'ca', name: 'Canada' },
-		{ value: 'fr', name: 'France' }
+	const categories = [
+		{ value: 'popular', name: 'Popular' },
+		{ value: 'top_rated', name: 'Top Rated' },
+		{ value: 'now_playing', name: 'Now Playing' },
+		{ value: 'upcoming', name: 'Upcoming' }
 	];
+
+	onMount(() => {
+		getMovieByCategory();
+	});
+
+	async function getMovieByCategory() {
+		isLoading = true;
+		movies = [];
+
+		const apiUrl = `${PUBLIC_ENDPOINT}/movie/${selectedCategory}?api_key=${PUBLIC_API_KEY}&page=${page}`;
+		return fetch(apiUrl)
+			.then((response) => response.json())
+			.then((data) => {
+				movies = data.results;
+				isLoading = false;
+			})
+			.catch((error) => console.error('Error:', error));
+	}
 </script>
+
+<svelte:head>
+	<title>Movies</title>
+</svelte:head>
 
 <div class="flex items-center justify-between space-x-2">
 	<div class="w-full">
 		<Search bind:value size="md" />
 	</div>
 	<div class="w-2/6">
-		<Select items={countries} bind:value={selected} />
+		<Select items={categories} bind:value={selectedCategory} on:change={getMovieByCategory} />
 	</div>
 </div>
 
 <div class="mt-5 flex flex-wrap">
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
-	<MoveListItem />
+	{#if isLoading}
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		<CardPlaceholder divClass="w-44 me-2 mb-2" />
+	{:else}
+		{#each movies as movie}
+			<MoveListItem {movie} />
+		{/each}
+	{/if}
 </div>
+
+<!-- <div class="flex justify-center my-3">
+	<Button>
+		<Spinner class="me-3" size="4" color="white" />Loading ...
+	</Button>
+</div> -->
