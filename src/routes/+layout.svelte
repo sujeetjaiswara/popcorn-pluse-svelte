@@ -7,7 +7,7 @@
 
 <Navbar class="py-[10px] border-b" color="default">
 	<NavBrand href="/">
-		<span class="text-2xl">🍿</span>
+		<img src="logo.png" alt="" class="w-8" />
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 			Popcorn Pluse
 		</span>
