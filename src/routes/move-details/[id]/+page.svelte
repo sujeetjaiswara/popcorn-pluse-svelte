@@ -8,9 +8,16 @@
 
 	let movie: any = {};
 	let similarMovies: any = [];
+	let watchProviders: any = [];
+
+	let isFirstLoad = true;
 
 	afterNavigate(() => {
-		getData();
+		if (!isFirstLoad) {
+			getData();
+		}
+
+		isFirstLoad = false;
 	});
 
 	onMount(() => {
@@ -20,6 +27,7 @@
 	function getData() {
 		movie = getMovieDetail(Number($page.params.id));
 		similarMovies = getSimilarMovies(Number($page.params.id));
+		watchProviders = getWatchProviders(Number($page.params.id));
 	}
 
 	async function getMovieDetail(id: number) {
@@ -37,6 +45,18 @@
 		const data = await res.json();
 		if (res.ok) {
 			return data.results;
+		} else {
+			throw new Error(data);
+		}
+	}
+
+	async function getWatchProviders(id: number) {
+		const res = await fetch(
+			`${PUBLIC_ENDPOINT}/movie/${id}/watch/providers?api_key=${PUBLIC_API_KEY}`
+		);
+		const data = await res.json();
+		if (res.ok) {
+			return data.results ? data.results?.IN : '';
 		} else {
 			throw new Error(data);
 		}
@@ -124,6 +144,114 @@
 					</a>
 				</div>
 			</div>
+
+			{#await watchProviders}
+				Loading...
+			{:then watchProviders}
+				<div class="mt-3">
+					{#if watchProviders.buy}
+						<div class="flex space-x-1 mb-2">
+							<span class="me-1">Buy:</span>
+							{#each watchProviders?.buy as buy}
+								{#if buy.provider_name === 'Amazon Video'}
+									<img
+										src="https://images.justwatch.com/icon/52449861/s100/amazonprimevideo.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{:else if buy.provider_name === 'Google Play Movies'}
+									<img
+										src="https://images.justwatch.com/icon/169478387/s100/play.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{:else if buy.provider_name === 'Apple TV'}
+									<img
+										src="https://images.justwatch.com/icon/190848813/s100/itunes.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{:else if buy.provider_name === 'Sky Store'}
+									<img
+										src="https://images.justwatch.com/icon/208571850/s100/skystore.webp"
+										alt="Sky Store"
+										class="w-8 rounded-md"
+									/>
+								{:else if buy.provider_name === 'Rakuten TV'}
+									<img
+										src="https://images.justwatch.com/icon/128599720/s100/wuaki.webp"
+										alt="Rakuten TV"
+										class="w-8 rounded-md"
+									/>
+								{:else if buy.provider_name === 'Microsoft Store'}
+									<img
+										src="https://images.justwatch.com/icon/820542/s100/microsoft.webp"
+										alt="Rakuten TV"
+										class="w-8 rounded-md"
+									/>
+								{:else if buy.provider_name === 'YouTube'}
+									<img
+										src="https://images.justwatch.com/icon/59562423/s100/youtube.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{/if}
+							{/each}
+						</div>
+					{/if}
+
+					{#if watchProviders?.rent}
+						<div class="flex items-center space-x-1">
+							<span class="me-1">Rent:</span>
+							{#each watchProviders?.rent as rent}
+								{#if rent.provider_name === 'Amazon Video'}
+									<img
+										src="https://images.justwatch.com/icon/52449861/s100/amazonprimevideo.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{:else if rent.provider_name === 'Google Play Movies'}
+									<img
+										src="https://images.justwatch.com/icon/169478387/s100/play.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{:else if rent.provider_name === 'Apple TV'}
+									<img
+										src="https://images.justwatch.com/icon/190848813/s100/itunes.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{:else if rent.provider_name === 'Sky Store'}
+									<img
+										src="https://images.justwatch.com/icon/208571850/s100/skystore.webp"
+										alt="Sky Store"
+										class="w-8 rounded-md"
+									/>
+								{:else if rent.provider_name === 'Rakuten TV'}
+									<img
+										src="https://images.justwatch.com/icon/128599720/s100/wuaki.webp"
+										alt="Rakuten TV"
+										class="w-8 rounded-md"
+									/>
+								{:else if rent.provider_name === 'Microsoft Store'}
+									<img
+										src="https://images.justwatch.com/icon/820542/s100/microsoft.webp"
+										alt="Rakuten TV"
+										class="w-8 rounded-md"
+									/>
+								{:else if rent.provider_name === 'YouTube'}
+									<img
+										src="https://images.justwatch.com/icon/59562423/s100/youtube.webp"
+										alt=""
+										class="w-8 rounded-md"
+									/>
+								{/if}
+							{/each}
+						</div>
+					{/if}
+				</div>
+			{/await}
 		</div>
 	</div>
 {:catch error}
