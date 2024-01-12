@@ -24,6 +24,7 @@
 	</div>
 </Navbar>
 
+<!-- Page container -->
 <div class="w-9/12 mx-auto mt-3">
 	<slot />
 </div>
