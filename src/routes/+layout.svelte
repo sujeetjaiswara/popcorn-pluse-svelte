@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import '../app.css';
-	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
+
+	import { DarkMode, NavBrand, Navbar } from 'flowbite-svelte';
 	import { GithubSolid } from 'flowbite-svelte-icons';
-	import { DarkMode } from 'flowbite-svelte';
 	import { fly } from 'svelte/transition';
 
 	export let data;

@@ -62,8 +62,8 @@
 		}
 	}
 
-	function getPoster(movie: any) {
-		return `https://image.tmdb.org/t/p/w220_and_h330_face${movie.poster_path}`;
+	function getPoster(posterPath: any) {
+		return `https://image.tmdb.org/t/p/w220_and_h330_face${posterPath}`;
 	}
 </script>
 
@@ -80,13 +80,14 @@
 		<ImagePlaceholder imgHeight={'60'} class="mt-8" />
 	</div>
 {:then movie}
-	<!-- style="background: url('https://image.tmdb.org/t/p/original{movie?.poster_path}')" -->
 	<div
 		class="flex rounded-md bg-dark bg-cover bg-center bg-gradient-to-r from-orange-50 to-orange-100 text-dark h-[30rem]"
 	>
-		<div class="p-3">
-			<img src={getPoster(movie)} alt="" class="rounded-md w-96" />
-		</div>
+		{#if movie?.poster_path}
+			<div class="p-3">
+				<img src={getPoster(movie?.poster_path)} alt="" class="rounded-md w-96 md:w-96 lg:w-60" />
+			</div>
+		{/if}
 
 		<div class="p-5">
 			<h2 class="font-semibold text-3xl mb-2">
@@ -103,37 +104,37 @@
 			{#if movie?.spoken_languages}
 				<div class="flex mt-2">
 					<div class="me-1">Available In :</div>
-					<div>
-						{#each movie.spoken_languages as language}
-							{language.name}<span class="me-1">,</span>
-						{/each}
-					</div>
+					{#each movie.spoken_languages as language, index}
+						{language.name}
+						{#if movie.spoken_languages.length - 1 !== index}
+							<span class="me-1">,</span>
+						{/if}
+					{/each}
 				</div>
 			{/if}
 
 			{#if movie.genres}
 				<div class="flex mt-2">
 					<div class="me-1">Genres :</div>
-					<div>
-						{#each movie?.genres as genre}
-							{genre.name}<span class="me-1">,</span>
-						{/each}
-					</div>
+					{#each movie?.genres as genre, index}
+						{genre.name}
+						{#if movie?.genres.length - 1 !== index}
+							<span class="me-1">,</span>
+						{/if}
+					{/each}
 				</div>
 			{/if}
 
-			<div class="d-flex mt-2">
-				<div class="me-1">Budget :</div>
-				{#if movie.budget && movie.budget > 0}
+			{#if movie.budget}
+				<div class="flex mt-2">
+					<div class="me-1">Budget :</div>
 					{movie?.budget}
-				{:else}
-					N/A
-				{/if}
-			</div>
+				</div>
+			{/if}
 
-			<div class="d-flex mt-2">
-				<div class="me-1">Homepage :</div>
-				<div class="me-1 font-monospace">
+			{#if movie?.homepage}
+				<div class="flex mt-2">
+					<div class="me-1">Homepage :</div>
 					<a
 						href={movie?.homepage}
 						target="_blank"
@@ -143,13 +144,13 @@
 						{movie?.homepage}
 					</a>
 				</div>
-			</div>
+			{/if}
 
 			{#await watchProviders}
 				Loading...
 			{:then watchProviders}
 				<div class="mt-3">
-					{#if watchProviders.buy}
+					{#if watchProviders?.buy}
 						<div class="flex space-x-1 mb-2">
 							<span class="me-1">Buy:</span>
 							{#each watchProviders?.buy as buy}
@@ -251,26 +252,36 @@
 						</div>
 					{/if}
 				</div>
+			{:catch error}
+				<p style="color: red">{error.message}</p>
 			{/await}
 		</div>
 	</div>
 {:catch error}
-	<!-- promise was rejected -->
-	<p>Something went wrong: {error.message}</p>
+	<p style="color: red">{error.message}</p>
 {/await}
 
-<div class="mt-2 flex flex-wrap">
-	{#await similarMovies}
-		<CardPlaceholder divClass="w-44 me-2 mb-2" />
-		<CardPlaceholder divClass="w-44 me-2 mb-2" />
-		<CardPlaceholder divClass="w-44 me-2 mb-2" />
-		<CardPlaceholder divClass="w-44 me-2 mb-2" />
-		<CardPlaceholder divClass="w-44 me-2 mb-2" />
-	{:then similarMovies}
-		{#each similarMovies as movie}
-			{#if movie}
-				<MoveListItem {movie} />
-			{/if}
-		{/each}
-	{/await}
+<div class="mt-10">
+	<h2 class="font-semibold text-lg">Similar Movies</h2>
+	<div class="flex flex-wrap">
+		{#await similarMovies}
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+		{:then similarMovies}
+			{#each similarMovies as movie}
+				{#if movie}
+					<MoveListItem {movie} />
+				{/if}
+			{/each}
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+	</div>
 </div>

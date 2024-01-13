@@ -9,6 +9,7 @@
 	let page = 1;
 	let movies: any[] = [];
 	let isLoading = false;
+	let searchTerm = '';
 
 	const categories = [
 		{ value: 'popular', name: 'Popular' },
@@ -34,6 +35,20 @@
 			})
 			.catch((error) => console.error('Error:', error));
 	}
+
+	function searchMovie() {
+		if (searchTerm) {
+			const apiUrl = `${PUBLIC_ENDPOINT}/search/collection?query=${searchTerm}&include_adult=false&language=en-US&api_key=${PUBLIC_API_KEY}&page=${page}`;
+			return fetch(apiUrl)
+				.then((response) => response.json())
+				.then((data) => {
+					movies = data.results;
+				})
+				.catch((error) => console.error('Error:', error));
+		} else {
+			getMovieByCategory();
+		}
+	}
 </script>
 
 <svelte:head>
@@ -42,7 +57,7 @@
 
 <div class="flex items-center justify-between space-x-2">
 	<div class="w-full">
-		<Search bind:value size="md" />
+		<Search bind:value={searchTerm} on:keyup={searchMovie} size="md" />
 	</div>
 	<div class="w-2/6">
 		<Select items={categories} bind:value={selectedCategory} on:change={getMovieByCategory} />

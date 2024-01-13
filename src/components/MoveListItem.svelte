@@ -3,8 +3,8 @@
 
 	export let movie: any;
 
-	function getPoster(movie: any) {
-		return `https://image.tmdb.org/t/p/w220_and_h330_face${movie.poster_path}`;
+	function getPoster(posterPath: any) {
+		return `https://image.tmdb.org/t/p/w220_and_h330_face${posterPath}`;
 	}
 </script>
 
@@ -13,9 +13,14 @@
 	class="hover:outline hover:outline-dark-500 hover:outline-2 hover:rounded m-1"
 >
 	<div class="flex flex-col w-[150px] rounded">
-		<div>
-			<img src={getPoster(movie)} alt="" class="rounded-t-md" />
-		</div>
+		{#if movie?.poster_path}
+			<div>
+				<img src={getPoster(movie?.poster_path)} alt="" class="rounded-t-md bg-black" />
+			</div>
+		{:else}
+			<div class="h-[225px] bg-black"></div>
+		{/if}
+
 		<div class="px-2 py-1 border border-t-0 rounded-b-md dark:border-gray-700 pb-3">
 			<h4 class="font-semibold text-sm truncate dark:text-white">
 				{movie?.title}
