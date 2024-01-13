@@ -54,6 +54,11 @@
 		isLoadingMore = false;
 	}
 
+	function filterMovies() {
+		movies = [];
+		getMovieByCategory();
+	}
+
 	function searchMovie() {
 		page = 1;
 
@@ -80,7 +85,7 @@
 		<Search bind:value={searchTerm} on:keyup={searchMovie} size="md" />
 	</div>
 	<div class="w-2/6">
-		<Select items={categories} bind:value={selectedCategory} on:change={getMovieByCategory} />
+		<Select items={categories} bind:value={selectedCategory} on:change={filterMovies} />
 	</div>
 </div>
 
