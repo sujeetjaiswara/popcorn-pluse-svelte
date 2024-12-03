@@ -6,9 +6,9 @@
 	import { afterNavigate } from '$app/navigation';
 	import { PUBLIC_API_KEY, PUBLIC_ENDPOINT } from '$env/static/public';
 
-	let movie: any = {};
-	let similarMovies: any = [];
-	let watchProviders: any = [];
+	let movie: any = $state({});
+	let similarMovies: any = $state([]);
+	let watchProviders: any = $state([]);
 
 	let isFirstLoad = true;
 

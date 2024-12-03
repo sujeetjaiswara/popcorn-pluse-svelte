@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { Badge } from 'flowbite-svelte';
 
-	export let movie: any;
+	interface Props {
+		movie: any;
+	}
+
+	let { movie }: Props = $props();
 
 	function getPoster(posterPath: any) {
 		return `https://image.tmdb.org/t/p/w220_and_h330_face${posterPath}`;

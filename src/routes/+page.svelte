@@ -4,12 +4,12 @@
 	import MoveListItem from '../components/MoveListItem.svelte';
 	import { PUBLIC_API_KEY, PUBLIC_ENDPOINT } from '$env/static/public';
 
-	let selectedCategory = 'popular';
+	let selectedCategory = $state('popular');
 	let page = 1;
-	let movies: any[] = [];
-	let searchTerm = '';
-	let isLoading = false;
-	let isLoadingMore = false;
+	let movies: any[] = $state([]);
+	let searchTerm = $state('');
+	let isLoading = $state(false);
+	let isLoadingMore = $state(false);
 
 	const categories = [
 		{ value: 'popular', name: 'Popular' },

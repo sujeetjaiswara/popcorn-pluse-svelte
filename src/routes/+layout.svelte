@@ -5,7 +5,12 @@
 	import { GithubSolid } from 'flowbite-svelte-icons';
 	import { fly } from 'svelte/transition';
 
-	export let data;
+	interface Props {
+		data: any;
+		children?: import('svelte').Snippet;
+	}
+
+	let { data, children }: Props = $props();
 </script>
 
 <Navbar class="py-[10px] border-b" color="default">
@@ -34,6 +39,6 @@
 		in:fly={{ x: -50, duration: 100, delay: 100 }}
 		out:fly={{ x: 50, duration: 100 }}
 	>
-		<slot />
+		{@render children?.()}
 	</div>
 {/key}
