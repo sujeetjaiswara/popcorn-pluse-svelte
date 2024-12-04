@@ -78,24 +78,20 @@
 </svelte:head>
 
 {#await movie}
-	<div
-		class="bg-dark text-dark flex h-[27rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 bg-cover bg-center"
-	>
+	<div class="bg-dark text-dark flex h-[27rem] rounded-md border">
 		<div class="p-3">
-			<Skeleton class="h-[260px] w-[175px] rounded-md bg-orange-100" />
+			<Skeleton class="h-[260px] w-[175px] rounded-md" />
 		</div>
 		<div class="flex w-full flex-col p-5">
-			<Skeleton class="mb-2 h-[20px] w-[350px] bg-orange-100" />
-			<Skeleton class="mb-2 h-[10px] w-full bg-orange-100" />
-			<Skeleton class="mb-2 h-[10px] w-full bg-orange-100" />
-			<Skeleton class="mb-2 h-[10px] w-[240px] bg-orange-100" />
-			<Skeleton class="mb-2 h-[10px] w-[250px] bg-orange-100" />
+			<Skeleton class="mb-2 h-[20px] w-[350px]" />
+			<Skeleton class="mb-2 h-[10px] w-full" />
+			<Skeleton class="mb-2 h-[10px] w-full" />
+			<Skeleton class="mb-2 h-[10px] w-[240px]" />
+			<Skeleton class="mb-2 h-[10px] w-[250px]" />
 		</div>
 	</div>
 {:then movie}
-	<div
-		class="bg-dark text-dark flex h-[27rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 bg-cover bg-center"
-	>
+	<div class="flex h-[26rem] rounded-md border">
 		{#if movie?.poster_path}
 			<div class="p-3">
 				<img
@@ -121,45 +117,53 @@
 			{#if movie?.spoken_languages}
 				<div class="mb-1 flex">
 					<div class="me-1 font-medium">Available In :</div>
-					{#each movie.spoken_languages as language, index}
-						{language.name}
-						{#if movie.spoken_languages.length - 1 !== index}
-							<span class="me-1">,</span>
-						{/if}
-					{/each}
+					<div class="text-muted-foreground">
+						{#each movie.spoken_languages as language, index}
+							{language.name}
+							{#if movie.spoken_languages.length - 1 !== index}
+								<span class="me-1">,</span>
+							{/if}
+						{/each}
+					</div>
 				</div>
 			{/if}
 
 			{#if movie.genres}
 				<div class="mb-1 flex">
 					<div class="me-1 font-medium">Genres :</div>
-					{#each movie?.genres as genre, index}
-						{genre.name}
-						{#if movie?.genres.length - 1 !== index}
-							<span class="me-1">,</span>
-						{/if}
-					{/each}
+					<div class="text-muted-foreground">
+						{#each movie?.genres as genre, index}
+							{genre.name}
+							{#if movie?.genres.length - 1 !== index}
+								<span class="me-1">,</span>
+							{/if}
+						{/each}
+					</div>
 				</div>
 			{/if}
 
 			{#if movie.budget}
 				<div class="mb-1 flex">
 					<div class="me-1 font-medium">Budget :</div>
-					{movie?.budget}
+					<div class="text-muted-foreground">
+						{movie?.budget}
+					</div>
 				</div>
 			{/if}
 
 			{#if movie?.homepage}
 				<div class="mb-1 flex">
 					<div class="me-1 font-medium">Homepage :</div>
-					<a
-						href={movie?.homepage}
-						target="_blank"
-						rel="noreferrer"
-						class="btn-link text-primary-600 hover:text-primary"
-					>
-						{movie?.homepage}
-					</a>
+					<div class="text-muted-foreground">
+						<a
+							href={movie?.homepage}
+							target="_blank"
+							rel="noreferrer"
+							class="btn-link text-primary-600 hover:text-primary"
+						>
+							{movie?.homepage}
+						</a>
+					</div>
 				</div>
 			{/if}
 

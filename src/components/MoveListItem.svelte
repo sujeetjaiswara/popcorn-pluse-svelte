@@ -23,14 +23,13 @@
 			{/if}
 		</Card.Content>
 		<Card.Footer class="flex flex-col items-start p-2">
-			<Card.Title class="truncate text-sm font-semibold dark:text-white">{movie?.title}</Card.Title>
-			<span class="text-xs text-slate-600">
+			<Card.Title class="w-full truncate text-sm font-semibold dark:text-white"
+				>{movie?.title}</Card.Title
+			>
+			<span class="mb-1 text-xs text-slate-600">
 				{movie?.release_date}
 			</span>
-			<Badge
-				variant="default"
-				class="bg-orange-50 text-[0.7rem] text-orange-500 hover:bg-orange-600 hover:text-orange-50"
-			>
+			<Badge variant="default" class="text-[0.7rem]">
 				{Math.floor(movie?.vote_average)}/10
 			</Badge>
 		</Card.Footer>

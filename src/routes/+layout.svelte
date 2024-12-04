@@ -2,7 +2,9 @@
 	import { Button } from '$lib/components/ui/button';
 	import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
 	import Github from 'lucide-svelte/icons/github';
-	import SunMoon from 'lucide-svelte/icons/sun-moon';
+	import Moon from 'lucide-svelte/icons/moon';
+	import Sun from 'lucide-svelte/icons/sun';
+	import { ModeWatcher, toggleMode } from 'mode-watcher';
 	import { fly } from 'svelte/transition';
 	import '../app.css';
 
@@ -29,10 +31,16 @@
 				href="https://github.com/sujeetjaiswara/popcorn-pluse-svelte"
 				target="_blank"
 			>
-				<Github />
+				<Github class="h-[1.2rem] w-[1.2rem]" />
 			</Button>
-			<Button variant="ghost" size="icon">
-				<SunMoon />
+			<Button variant="ghost" size="icon" onclick={toggleMode}>
+				<Sun
+					class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+				/>
+				<Moon
+					class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
+				/>
+				<span class="sr-only">Toggle theme</span>
 			</Button>
 		</div>
 	</div>
@@ -50,3 +58,5 @@
 		</div>
 	</ScrollArea>
 {/key}
+
+<ModeWatcher />
