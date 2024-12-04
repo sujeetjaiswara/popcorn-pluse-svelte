@@ -19,7 +19,7 @@
 			{#if movie?.poster_path}
 				<img src={getPoster(movie?.poster_path)} alt="" class="rounded-t-md bg-black" />
 			{:else}
-				<div class="h-[225px] bg-black"></div>
+				<div class="h-[311px] bg-black"></div>
 			{/if}
 		</Card.Content>
 		<Card.Footer class="flex flex-col items-start p-2">

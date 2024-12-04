@@ -17,7 +17,7 @@
 <div class="border-b py-[6px]">
 	<div class="container flex justify-between">
 		<a href="/" class="flex items-center text-gray-700">
-			<img src="logo.png" alt="" class="h-8 w-8" />
+			<img src="/logo.png" alt="" class="h-8 w-8" />
 			<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 				Popcorn Pluse
 			</span>

@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
-	import MoveListItem from '../../../components/MoveListItem.svelte';
 	import { afterNavigate } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { PUBLIC_API_KEY, PUBLIC_ENDPOINT } from '$env/static/public';
 	import { Badge } from '$lib/components/ui/badge/index.js';
+	import * as Carousel from '$lib/components/ui/carousel/index.js';
+	import { Skeleton } from '$lib/components/ui/skeleton/index.js';
+	import { onMount } from 'svelte';
+	import MoveListItem from '../../../components/MoveListItem.svelte';
 
 	let movie: any = $state({});
 	let similarMovies: any = $state([]);
@@ -76,19 +78,30 @@
 </svelte:head>
 
 {#await movie}
-	<div class="h-[30rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 p-3 text-white">
-		<!-- <ImagePlaceholder imgHeight={'60'} class="mt-8" /> -->
+	<div
+		class="bg-dark text-dark flex h-[27rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 bg-cover bg-center"
+	>
+		<div class="p-3">
+			<Skeleton class="h-[260px] w-[175px] rounded-md bg-orange-100" />
+		</div>
+		<div class="flex w-full flex-col p-5">
+			<Skeleton class="mb-2 h-[20px] w-[350px] bg-orange-100" />
+			<Skeleton class="mb-2 h-[10px] w-full bg-orange-100" />
+			<Skeleton class="mb-2 h-[10px] w-full bg-orange-100" />
+			<Skeleton class="mb-2 h-[10px] w-[240px] bg-orange-100" />
+			<Skeleton class="mb-2 h-[10px] w-[250px] bg-orange-100" />
+		</div>
 	</div>
 {:then movie}
 	<div
-		class="bg-dark text-dark flex h-[30rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 bg-cover bg-center"
+		class="bg-dark text-dark flex h-[27rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 bg-cover bg-center"
 	>
 		{#if movie?.poster_path}
 			<div class="p-3">
 				<img
 					src={getPoster(movie?.poster_path)}
 					alt=""
-					class="min-w-[150px] max-w-[150px] rounded-md"
+					class="min-w-[175px] max-w-[175px] rounded-md"
 				/>
 			</div>
 		{/if}
@@ -265,27 +278,32 @@
 	<p style="color: red">{error.message}</p>
 {/await}
 
-<div class="mt-10">
-	<h2 class="text-lg font-semibold">Similar Movies</h2>
-	<div class="grid grid-cols-6 gap-2">
-		{#await similarMovies}
-			<!-- <CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" /> -->
-		{:then similarMovies}
-			{#each similarMovies as movie}
-				{#if movie}
-					<MoveListItem {movie} />
-				{/if}
-			{/each}
-		{:catch error}
-			<p style="color: red">{error.message}</p>
-		{/await}
-	</div>
+<div class="mt-5">
+	<h2 class="mb-1 text-lg font-semibold">Similar Movies</h2>
+	{#await similarMovies}
+		<div class="grid grid-cols-6 gap-2">
+			<Skeleton class="h-[387px] rounded-md" />
+			<Skeleton class="h-[387px] rounded-md" />
+			<Skeleton class="h-[387px] rounded-md" />
+			<Skeleton class="h-[387px] rounded-md" />
+			<Skeleton class="h-[387px] rounded-md" />
+			<Skeleton class="h-[387px] rounded-md" />
+		</div>
+	{:then similarMovies}
+		<Carousel.Root>
+			<Carousel.Content>
+				{#each similarMovies as movie}
+					<Carousel.Item class="basis-1/6">
+						{#if movie}
+							<MoveListItem {movie} />
+						{/if}
+					</Carousel.Item>
+				{/each}
+			</Carousel.Content>
+			<Carousel.Previous />
+			<Carousel.Next />
+		</Carousel.Root>
+	{:catch error}
+		<p style="color: red">{error.message}</p>
+	{/await}
 </div>
