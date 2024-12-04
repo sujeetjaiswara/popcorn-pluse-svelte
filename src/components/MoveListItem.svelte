@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Badge } from 'flowbite-svelte';
+	import { Badge } from '$lib/components/ui/badge/index.js';
+	import * as Card from '$lib/components/ui/card/index.js';
 
 	interface Props {
 		movie: any;
@@ -12,26 +13,26 @@
 	}
 </script>
 
-<a
-	href="/move-details/{movie?.id}"
-	class="hover:outline hover:outline-dark-500 hover:outline-2 hover:rounded m-1"
->
-	<div class="flex flex-col w-[150px] rounded">
-		{#if movie?.poster_path}
-			<div>
+<a href="/move-details/{movie?.id}">
+	<Card.Root class="hover:outline-dark-500 hover:outline hover:outline-2">
+		<Card.Content class="p-0">
+			{#if movie?.poster_path}
 				<img src={getPoster(movie?.poster_path)} alt="" class="rounded-t-md bg-black" />
-			</div>
-		{:else}
-			<div class="h-[225px] bg-black"></div>
-		{/if}
-
-		<div class="px-2 py-1 border border-t-0 rounded-b-md dark:border-gray-700 pb-3">
-			<h4 class="font-semibold text-sm truncate dark:text-white">
-				{movie?.title}
-			</h4>
-			<Badge color="primary">
+			{:else}
+				<div class="h-[225px] bg-black"></div>
+			{/if}
+		</Card.Content>
+		<Card.Footer class="flex flex-col items-start p-2">
+			<Card.Title class="truncate text-sm font-semibold dark:text-white">{movie?.title}</Card.Title>
+			<span class="text-xs text-slate-600">
+				{movie?.release_date}
+			</span>
+			<Badge
+				variant="default"
+				class="bg-orange-50 text-[0.7rem] text-orange-500 hover:bg-orange-600 hover:text-orange-50"
+			>
 				{Math.floor(movie?.vote_average)}/10
 			</Badge>
-		</div>
-	</div>
+		</Card.Footer>
+	</Card.Root>
 </a>

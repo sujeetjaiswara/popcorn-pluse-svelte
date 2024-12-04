@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Badge, CardPlaceholder, ImagePlaceholder } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
 	import MoveListItem from '../../../components/MoveListItem.svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { PUBLIC_API_KEY, PUBLIC_ENDPOINT } from '$env/static/public';
+	import { Badge } from '$lib/components/ui/badge/index.js';
 
 	let movie: any = $state({});
 	let similarMovies: any = $state([]);
@@ -76,34 +76,38 @@
 </svelte:head>
 
 {#await movie}
-	<div class="rounded-md bg-gradient-to-r from-orange-50 to-orange-100 text-white h-[30rem] p-3">
-		<ImagePlaceholder imgHeight={'60'} class="mt-8" />
+	<div class="h-[30rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 p-3 text-white">
+		<!-- <ImagePlaceholder imgHeight={'60'} class="mt-8" /> -->
 	</div>
 {:then movie}
 	<div
-		class="flex rounded-md bg-dark bg-cover bg-center bg-gradient-to-r from-orange-50 to-orange-100 text-dark h-[30rem]"
+		class="bg-dark text-dark flex h-[30rem] rounded-md bg-gradient-to-r from-orange-50 to-orange-100 bg-cover bg-center"
 	>
 		{#if movie?.poster_path}
 			<div class="p-3">
-				<img src={getPoster(movie?.poster_path)} alt="" class="rounded-md w-96 md:w-96 lg:w-60" />
+				<img
+					src={getPoster(movie?.poster_path)}
+					alt=""
+					class="min-w-[150px] max-w-[150px] rounded-md"
+				/>
 			</div>
 		{/if}
 
 		<div class="p-5">
-			<h2 class="font-semibold text-3xl mb-2">
+			<h2 class="mb-2 flex items-center gap-2 text-2xl font-semibold">
 				{movie?.title}
-				<Badge color="primary">
+				<Badge variant="default">
 					{Math.floor(movie?.vote_average)}/10
 				</Badge>
 			</h2>
 
-			<p class="mb-2">
+			<p class="mb-2 text-base text-muted-foreground">
 				{movie?.overview}
 			</p>
 
 			{#if movie?.spoken_languages}
-				<div class="flex mt-2">
-					<div class="me-1">Available In :</div>
+				<div class="mb-1 flex">
+					<div class="me-1 font-medium">Available In :</div>
 					{#each movie.spoken_languages as language, index}
 						{language.name}
 						{#if movie.spoken_languages.length - 1 !== index}
@@ -114,8 +118,8 @@
 			{/if}
 
 			{#if movie.genres}
-				<div class="flex mt-2">
-					<div class="me-1">Genres :</div>
+				<div class="mb-1 flex">
+					<div class="me-1 font-medium">Genres :</div>
 					{#each movie?.genres as genre, index}
 						{genre.name}
 						{#if movie?.genres.length - 1 !== index}
@@ -126,20 +130,20 @@
 			{/if}
 
 			{#if movie.budget}
-				<div class="flex mt-2">
-					<div class="me-1">Budget :</div>
+				<div class="mb-1 flex">
+					<div class="me-1 font-medium">Budget :</div>
 					{movie?.budget}
 				</div>
 			{/if}
 
 			{#if movie?.homepage}
-				<div class="flex mt-2">
-					<div class="me-1">Homepage :</div>
+				<div class="mb-1 flex">
+					<div class="me-1 font-medium">Homepage :</div>
 					<a
 						href={movie?.homepage}
 						target="_blank"
 						rel="noreferrer"
-						class="btn-link text-primary-600"
+						class="btn-link text-primary-600 hover:text-primary"
 					>
 						{movie?.homepage}
 					</a>
@@ -151,7 +155,7 @@
 			{:then watchProviders}
 				<div class="mt-3">
 					{#if watchProviders?.buy}
-						<div class="flex space-x-1 mb-2">
+						<div class="mb-2 flex space-x-1">
 							<span class="me-1">Buy:</span>
 							{#each watchProviders?.buy as buy}
 								{#if buy.provider_name === 'Amazon Video'}
@@ -262,9 +266,10 @@
 {/await}
 
 <div class="mt-10">
-	<h2 class="font-semibold text-lg">Similar Movies</h2>
-	<div class="flex flex-wrap">
+	<h2 class="text-lg font-semibold">Similar Movies</h2>
+	<div class="grid grid-cols-6 gap-2">
 		{#await similarMovies}
+			<!-- <CardPlaceholder divClass="w-44 me-2 mb-2" />
 			<CardPlaceholder divClass="w-44 me-2 mb-2" />
 			<CardPlaceholder divClass="w-44 me-2 mb-2" />
 			<CardPlaceholder divClass="w-44 me-2 mb-2" />
@@ -272,8 +277,7 @@
 			<CardPlaceholder divClass="w-44 me-2 mb-2" />
 			<CardPlaceholder divClass="w-44 me-2 mb-2" />
 			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
-			<CardPlaceholder divClass="w-44 me-2 mb-2" />
+			<CardPlaceholder divClass="w-44 me-2 mb-2" /> -->
 		{:then similarMovies}
 			{#each similarMovies as movie}
 				{#if movie}
