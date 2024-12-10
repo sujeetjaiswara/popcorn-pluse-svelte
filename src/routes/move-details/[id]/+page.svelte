@@ -285,7 +285,7 @@
 <div class="mt-5">
 	<h2 class="mb-1 text-lg font-semibold">Similar Movies</h2>
 	{#await similarMovies}
-		<div class="grid grid-cols-6 gap-2">
+		<div class="grid grid-cols-12 gap-2 md:grid-cols-6">
 			<Skeleton class="h-[387px] rounded-md" />
 			<Skeleton class="h-[387px] rounded-md" />
 			<Skeleton class="h-[387px] rounded-md" />
@@ -297,7 +297,7 @@
 		<Carousel.Root>
 			<Carousel.Content>
 				{#each similarMovies as movie}
-					<Carousel.Item class="basis-1/6">
+					<Carousel.Item class="basis-1/2 md:basis-1/6">
 						{#if movie}
 							<MoveListItem {movie} />
 						{/if}
