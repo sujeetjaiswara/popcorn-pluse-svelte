@@ -132,7 +132,7 @@
 	</div>
 </div>
 
-<div class="mt-5 grid gap-2 md:grid-cols-4 lg:grid-cols-8">
+<div class="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8">
 	{#if isLoading && !isLoadingMore}
 		{#each { length: 20 }, rank}
 			<Card.Root class="hover:outline-dark-500 hover:outline hover:outline-2">
