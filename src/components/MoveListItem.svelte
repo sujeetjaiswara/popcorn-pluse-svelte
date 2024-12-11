@@ -15,15 +15,15 @@
 </script>
 
 <a href="/move-details/{movie?.id}">
-	<Card.Root class="hover:outline-dark-500 hover:outline hover:outline-2">
+	<Card.Root class="hover:outline-dark-500 my-1 hover:outline hover:outline-1">
 		<Card.Content class="p-0">
 			{#if movie?.poster_path}
 				{@const posterPath = getPoster(movie?.poster_path)}
 				<!-- {@const posterPath = 'https://images.unsplash.com/photo-1467811884194-ae868cd3f090?q=80&w=2070&auto=format&fit=crop'} -->
-				<img src={posterPath} alt="" class="rounded-t-md bg-black" />
+				<img src={posterPath} alt="" class="rounded-t-md bg-zinc-100 dark:bg-zinc-900" />
 				<!-- <enhanced:img src={posterPath} alt="An alt text" class="rounded-t-md bg-black" /> -->
 			{:else}
-				<div class="h-[311px] bg-black"></div>
+				<div class="h-[317px] bg-zinc-50 dark:bg-zinc-900"></div>
 			{/if}
 		</Card.Content>
 		<Card.Footer class="flex flex-col items-start p-2">

@@ -59,7 +59,8 @@
 
 	<!-- Page container -->
 	{#key data.url}
-		<ScrollArea class="h-[calc(100vh-3.8rem)]">
+		<!-- <ScrollArea class="h-[calc(100vh-3.8rem)]"> -->
+		<div class="custom-scrollbar h-screen overflow-y-scroll">
 			<div
 				class="container mx-auto mt-3"
 				in:fly={{ x: -50, duration: 100, delay: 100 }}
@@ -67,7 +68,8 @@
 			>
 				{@render children?.()}
 			</div>
-		</ScrollArea>
+		</div>
+		<!-- </ScrollArea> -->
 	{/key}
 </svelte:boundary>
 

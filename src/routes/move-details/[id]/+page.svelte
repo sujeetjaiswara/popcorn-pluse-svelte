@@ -80,7 +80,7 @@
 {#await movie}
 	<div class="bg-dark text-dark flex h-[27rem] rounded-md border">
 		<div class="p-3">
-			<Skeleton class="h-[260px] w-[175px] rounded-md" />
+			<Skeleton class="max-h-[375px] min-h-[375px] w-[275px] rounded-md" />
 		</div>
 		<div class="flex w-full flex-col p-5">
 			<Skeleton class="mb-2 h-[20px] w-[350px]" />
@@ -91,13 +91,13 @@
 		</div>
 	</div>
 {:then movie}
-	<div class="flex h-[26rem] rounded-md border">
+	<div class="flex h-[27rem] rounded-md border">
 		{#if movie?.poster_path}
 			<div class="p-3">
 				<img
 					src={getPoster(movie?.poster_path)}
 					alt=""
-					class="min-w-[175px] max-w-[175px] rounded-md"
+					class="min-w-[275px] max-w-[275px] rounded-md"
 				/>
 			</div>
 		{/if}
@@ -105,9 +105,11 @@
 		<div class="p-5">
 			<h2 class="mb-2 flex items-center gap-2 text-2xl font-semibold">
 				{movie?.title}
-				<Badge variant="default">
-					{Math.floor(movie?.vote_average)}/10
-				</Badge>
+				{#if movie?.vote_average}
+					<Badge variant="default">
+						{Math.floor(movie?.vote_average)}/10
+					</Badge>
+				{/if}
 			</h2>
 
 			<p class="mb-2 text-base text-muted-foreground">
