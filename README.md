@@ -63,7 +63,3 @@ We welcome contributions! If you'd like to contribute, please follow these steps
 ## 📄 License
 
 This project is licensed under the MIT License. See the LICENSE file for more details.
-
----
-
-Feel free to customize this README further to fit your project's needs! 😊
