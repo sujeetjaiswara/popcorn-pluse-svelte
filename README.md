@@ -1,7 +1,3 @@
-Sure! Here's a README document for your project with some emojis to make it more engaging:
-
----
-
 # 🍿 Popcorn Plus Svelte
 
 Welcome to the **Popcorn Plus Svelte** project! This repository contains the source code for a Svelte-based application that enhances your movie-watching experience. 🎬
